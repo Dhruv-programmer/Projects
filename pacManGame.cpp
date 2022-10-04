@@ -26,7 +26,7 @@ void printRules()
     cout << "\n\n\t\t";
     cout << "F -> Fruit \n\t\tEat fruits to increase score\n\t\t";
     cout << "O -> PacMan \n\t\t";
-    cout << "Use Arrow keys to control Snake\n\n\t\t ";
+    cout << "Use Arrow keys to control PacMan\n\n\t\t ";
     cout << "press any key to continue....";
     char c = _getch(); // to wait for a key to be pressed
 }
