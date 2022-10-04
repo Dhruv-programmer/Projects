@@ -1,6 +1,5 @@
 #include <iostream>
 #include <conio.h>
-#include <windows.h>
 using namespace std;
 int x, y, fruit_x, fruit_y, score;
 const int width = 20;
@@ -26,7 +25,7 @@ void printRules()
     cout << "\n\n\t\t";
     cout << "F -> Fruit \n\t\tEat fruits to increase score\n\t\t";
     cout << "O -> PacMan \n\t\t";
-    cout << "Use Arrow keys to control Snake\n\n\t\t ";
+    cout << "Use Arrow keys to control PacMan\n\n\t\t ";
     cout << "press any key to continue....";
     char c = _getch(); // to wait for a key to be pressed
 }
@@ -103,10 +102,10 @@ void logic()
         x++;
         break;
     }
-    // if snake touches wall , then -> gameover
+    // if pacMan touches wall , then -> gameover
     if (x == 0 || y == 0 || x == height - 1 || y == width - 1)
         gameOver = true;
-    // if snake eats fruit
+    // if pacMan eats fruit
     if (x == fruit_x && y == fruit_y)
     {
         score += 10;
