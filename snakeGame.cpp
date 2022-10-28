@@ -3,8 +3,8 @@
 #include <bits/stdc++.h>
 #include <windows.h>
 using namespace std;
-#define height 15
-#define width 15
+#define height 18
+#define width 18
 int x, y, fruit_x, fruit_y, score;
 int tailX[100], tailY[100], tailLength;
 bool gameOver;
@@ -19,6 +19,17 @@ void createFruit()
 {
     fruit_x = (rand() % (height - 4)) + 2;
     fruit_y = (rand() % (width - 4)) + 2;
+    //ensuring that fruit don't spawn on the snake itself
+    while(fruit_x == x && fruit_y == y)
+        createFruit();
+    for (int i = 0; i < tailLength; i++)
+    {
+        if(fruit_x == tailX[i] && fruit_y == tailY[i])
+        {
+            createFruit();
+            break;
+        }
+    }
 }
 void draw()
 {
@@ -51,10 +62,11 @@ void draw()
         }
         cout << "\n";
     }
-    cout << "\n\tSCORE -> " << score;
+    cout << "\n\tSCORE -> \t" << score;
 }
 void logic()
 {
+    //tail logic -> first element of tail follows head and every next segment of tail follows the preceding segment
     int prevX = x, prevY = y;
     for (int i = 0; i < tailLength; i++)
     {
@@ -79,19 +91,23 @@ void logic()
         x++;
         break;
     }
+    // if snake hits itself, then GAMEOVER
     for (int i = 0; i < tailLength; i++)
         if (x == tailX[i] && y == tailY[i])
             gameOver = true;
+    // when snake eats fruit
     if (x == fruit_x && y == fruit_y)
     {
         score += 10;
         tailLength++;
         createFruit();
     }
+    // when snake hits wall , it will come out from the opposite side of wall
     if (x == height-1) x = 1; else if (x == 0) x = height - 2;
     if (y == 0) y = width - 2; else if (y == width-1) y = 1;
-    // if (x <= 0 || x >= (height - 1) || y <= 0 || y >= (width - 1))
-    //     gameOver = true;
+    // if you want to end the game when snake hits wall , use below code instead 
+    // // if (x <= 0 || x >= (height - 1) || y <= 0 || y >= (width - 1))
+    // //    gameOver = true;
 }
 void input()
 {
@@ -117,12 +133,6 @@ void input()
 }
 void setup()
 {
-    // make sure there is no tail at beginning of game
-    for (int i = 0; i < 100; i++)
-    {
-        tailX[i] = -1;
-        tailY[i] = -1;
-    }
     tailLength = 0;
     score = 0;
     gameOver = false;
